@@ -1,14 +1,60 @@
 class update {
-    file {"/etc/apt/sources.list":
-        source => "puppet:///modules/update/sources.list",
-        ensure => file,
-        replace => true
-    }
+  file {"/etc/apt/sources.list":
+    content => template("update/source.list.erb"),
+    ensure => file,
+    replace => true
+  }
 
-    cron {systemupdate:
-        command => "apt-get update && apt-get dist-upgrade -y",
-        user => root,
-        require => File['/etc/apt/sources.list'],
-        hour => [1]
-    }
+  $allpackages = [
+    'libevent-dev', 
+    'libssl-dev', 
+    'libgd2-xpm-dev', 
+    'libzzip-dev', 
+    'libbz2-dev', 
+    'libpcre3-dev', 
+    'libpcre++-dev', 
+    'libxml2-dev', 
+    'libmcrypt-dev', 
+    'libreadline-dev', 
+    'libc-client2007e-dev', 
+    'libdb-dev', 
+    'libdb++-dev', 
+    'libcurl4-openssl-dev', 
+    'libxslt1-dev', 
+    'libt1-dev', 
+    'libaio1', 
+    'ssh', 
+    'autoconf', 
+    'cmake',
+    'make', 
+    'libtool', 
+    'gcc', 
+    'g++', 
+    'curl', 
+    'bzip2', 
+    'unrar', 
+    'nmap', 
+    'tree', 
+    'vim',
+    'shorewall', 
+    'cifs-utils', 
+    'smbclient', 
+    'samba-common', 
+    'nfs-common', 
+    'expect', 
+    'realpath', 
+    'libyaml-dev', 
+    'bison'
+  ]
+  package {$allpackages:
+    ensure => present,
+    require => File['/etc/apt/sources.list']
+  } 
+
+  cron {systemupdate:
+    command => "apt-get update && apt-get dist-upgrade -y",
+    user => root,
+    require => File['/etc/apt/sources.list'],
+    hour => [1]
+  }
 }
