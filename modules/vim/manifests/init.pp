@@ -1,4 +1,8 @@
 class vim {
+  package {"vim":
+    ensure => present
+  }
+
   file {"/root/.vimrc":
     source => "puppet:///modules/vim/.vimrc",
     ensure => file,

@@ -1,5 +1,5 @@
 class rrdtool {
-  $tmppath = "/tmp"
+  $tmppath = "/root/tmp"
 
   $allpackages = [
     'libglib2.0-dev', 

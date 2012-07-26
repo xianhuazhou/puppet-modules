@@ -1,5 +1,5 @@
 class ganglia {
-  $tmppath = "/tmp"
+  $tmppath = "/root/tmp"
   $gangliahome = "/usr/local/ganglia"
 
   file {"ganglia":
